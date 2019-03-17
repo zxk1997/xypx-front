@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>校园蒲行-发布讲座</title>
+	<link rel="stylesheet" type="text/css" href="css/xypuxing.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.css">
+	<link rel="stylesheet" type="text/css" href="css/global.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.min.css">
+</head>
+<body style="background-color: #f6f6f6">
+	<div id="iss_event">
+		<px-home-nav></px-home-nav>
+		<div id="issue_box">
+			<div class="box-mid">
+				<form class="form-horizontal" role="form">
+					<!-- <div class="form-group">
+						<label class="control-label col-xs-2">活动标题<em>*</em></label>
+						<div class="col-xs-9">
+							<input type="text" placeholder="活动标题(不少于5个字)">
+						</div>
+					</div> -->
+					<stext-input v-for="item in input_group.group2" :inp_item="item"></stext-input>
+<!-- 					<div class="form-group">
+						<label class="control-label col-xs-2">活动地点<em>*</em></label>
+						<div class="col-xs-9">
+							<input type="text" placeholder="活动标题(不少于5个字)">
+						</div>
+					</div> -->
+					<!-- <div class="form-group">
+						<label class="control-label col-xs-2">主办方手机号<em>*</em></label>
+						<div class="col-xs-9">
+							<input type="text" placeholder="请输入活动负责人的联系方式">
+						</div>
+					</div> -->
+					<div class="form-group">
+						<label class="control-label col-xs-2">讲座章<em>*</em></label>
+						<div class="col-xs-2">
+							<div class="lb-box">
+								<span class="lb-list lbon">
+									<input type="radio" checked="checked" name="lb" value="1" class="lbradioClass">
+								</span>
+								有
+							</div>
+							<div class="lb-box">
+								<span class="lb-list on">
+									<input type="radio" name="lb" value="0" class="lbradioClass">
+								</span>
+								无
+							</div>
+						</div>
+						
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-2">讲座开始时间<em>*</em></label>
+						<div class="col-xs-3">
+							<label class="iss-time">开始时间</label>
+							<t-input :x="input_group.timeStart"></t-input>
+						</div>
+						<div class="col-xs-1 iss-time-jt">
+							<span class="glyphicon glyphicon-resize-horizontal"></span>
+						</div>
+						<div class="col-xs-3">
+							<label class="iss-time">结束时间</label>
+							<t-input :x="input_group.timeEnd"></t-input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-2">讲座报名时间<em>*</em></label>
+						<div class="col-xs-3">
+							<label class="iss-time">开始时间</label>
+							<t-input :x="input_group.bmtimeStart"></t-input>
+						</div>
+						<div class="col-xs-1 iss-time-jt">
+							<span class="glyphicon glyphicon-resize-horizontal"></span>
+						</div>
+						<div class="col-xs-3">
+							<label class="iss-time">结束时间</label>
+							<t-input :x="input_group.bmtimeEnd"></t-input>
+						</div>
+					</div>
+
+					<upload-img v-for="item in jz_upload_img_comp.data" :pro_name="item" :pro_type="jz_upload_img_comp.isJZ"></upload-img>
+
+					<div class="form-group">
+						<label class="control-label col-xs-2">讲座人数<em>*</em></label>
+						<div class="col-xs-9">
+							<input type="text" v-model="issEventObj.plimit" placeholder="最多允许的人数,0不限制讲座名额">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-2">讲座标签<em class="imp">*</em></label>
+						<div class="col-xs-9 form-inline">
+							<div class="plug-btn">
+								+
+								<ul class="event-check-list">
+									
+								</ul>
+							</div>
+							<ul class="event-checked-list">
+							</ul>
+							<div class="tooltip-box">
+								<span class="label label-default" data-toggle="tooltip" data-placement="right" title="添加合适的标签有利于用户在站内、站外发现您的讲座,最多添加五个标签"><em class="glyphicon glyphicon-exclamation-sign"></em></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-2">适合人群<em class="imp">*</em></label>
+						<div class="col-xs-9 form-inline">
+							<div class="plug-btn">
+								+
+								<ul class="event-check-list">
+									
+								</ul>
+							</div>
+							<ul class="event-checked-list"></ul>
+							<div class="tooltip-box">
+								<span class="label label-default" data-toggle="tooltip" data-placement="right" title="添加合适的标签有利于用户在站内、站外发现您的讲座,最多添加五个标签"><em class="glyphicon glyphicon-exclamation-sign"></em></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-2">讲座摘要<em>*</em></label>
+						<div class="col-xs-9" style="position: relative;">
+							<textarea class="iss-summary form-control" id="iss_describe" placeholder="请填写讲座摘要(少于100字)" rows="3" v-model="issEventObj.describe"></textarea>
+							<span class="zishu">{{zishu}}/100</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-xs-2">详细内容<em>*</em></label>
+						<div class="col-xs-9">
+							<textarea class="iss-summary" id="huodongdetail" placeholder="请填写活动摘要" rows="30"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="box-mid">
+			<div class="input-group btn-g">
+				<button class="btn btn-primary btn-lg" v-on:click="iss_event(1)"><span class="glyphicon glyphicon-ok"></span>发布讲座</button>
+				<button class="btn btn-default btn-lg" @click="daohang.retHome"><span class="glyphicon glyphicon-home"></span>返回首页</button>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/kindeditor/kindeditor-all.js"></script>
+		<script type="text/javascript" src="js/kindeditor/lang/zh_CN.js"></script>
+		<px-footer></px-footer>
+	</div>
+		<script type="text/javascript" src="js/global_setting.js"></script>
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.zh-CN.js"></script>
+	<script type="text/javascript" src="js/browseType.js"></script>
+	<script type="text/javascript" src="js/vue.min.js"></script>
+	<script src="https://cdn.bootcss.com/axios/0.16.2/axios.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.min.js"></script>
+	<script type="text/javascript" src="js/global.js"></script>
+	<script type="text/javascript" src="js/issEvent.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>校园蒲行--内容详细页</title>
+	<link rel="stylesheet" type="text/css" href="css/xypuxing.min.css">
+	<link rel="stylesheet" type="text/css" href="css/global.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.min.css">
+</head>
+<body style="background-color: #f5f5f5">
+	<div id="detailBox">	
+		<px-home-nav :detailpage="true"></px-home-nav>
+		<div class="basic_info">
+			<div class="box-mid">
+				<div class="detail-poster">
+					<img :src="result.placard">
+				</div>
+				<div class="detail-header">
+					<h2>{{result.title}}</h2>
+					<p><span class="glyphicon glyphicon-time" title="活动时间"></span>{{result.s|timeFilter}} ～ {{result.e|timeFilter}} </p>
+					<p><span class="glyphicon glyphicon-map-marker" title="活动地址"></span>{{result.address}}</p>
+					<p><span class="glyphicon glyphicon-user" title="活动限制"></span>限额:{{result.plimit}}人(已报名{{result.joincnt}}人)</p>
+					<p class="event-info-fbr">
+						<span class="glyphicon glyphicon-record" title="活动发布人"></span>
+						<a href="###"><img :src="result.icon">{{result.nickname}}</a>
+					</p>
+					<p class="bmbutton">
+						<button type="button" class="btn btn-lg btn-primary" v-if="!daohang.isLogin" @click="pleaseLogin">立即报名</button>
+						<button type="button" class="btn btn-lg btn-primary" v-else-if="daohang.isLogin&&isBM">已报名</button>
+						<button data-target="#px_BM" data-toggle="modal" type="button" class="btn btn-lg btn-primary" v-else-if="daohang.isLogin&&!isBM">立即报名</button>
+						<button data-target="#px_BM" data-toggle="modal" type="button" class="btn btn-lg btn-primary" v-else-if="daohang.isLogin&&!isBM&&daohang.px_userinfo.ua === result.ua">查看活动详情</button>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div style="clear: both;"></div>
+		<div class="detail-body" id="detail_body">
+			<div class="box-mid" v-html="result.content">
+				
+			</div>
+		</div>
+		<!-- <div class="detail-footer">
+			<div class="box-mid">
+				<h3 class="join-peo-tit">参与人员</h3>
+				<div class="join-peo-box" v-for="i in joinPeo">
+					<div class="join-peo-tx">
+						<a href="###"><img :src="i.icon" alt=""></a>
+					</div>
+					<p class="join-name">{{i.nickname}}</p>
+					<p class="join-time">2017-10-24&nbsp;报名</p>
+				</div>
+				<div style="clear: both"></div>
+			</div>
+		</div> -->
+		<px-footer></px-footer>
+	</div>
+		<script type="text/javascript" src="js/global_setting.js"></script>
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/browseType.js"></script>
+	<script type="text/javascript" src="js/vue.min.js"></script>
+	<script src="https://cdn.bootcss.com/axios/0.16.2/axios.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.min.js"></script>
+	<script type="text/javascript" src="js/global.js"></script>
+	<script type="text/javascript" src="js/detail.js"></script>
+</body>
+</html>

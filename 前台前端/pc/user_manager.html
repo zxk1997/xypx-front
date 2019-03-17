@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>个人</title>
+	<link rel="stylesheet" type="text/css" href="css/xypuxing.min.css">
+	<link rel="stylesheet" href="css/global.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.min.css">
+	
+</head>
+<body>
+	<div id="userManager">
+		<px-home-nav></px-home-nav>
+		<div class="Muser-header">
+			<div class="Muser-header-img">
+				<img src="img/8.jpg">
+			</div>
+			<img :src="daohang.px_userinfo.icon" class="Muser-header-tx">
+			<p class="px_user_name">{{daohang.px_userinfo.nickname}}</p>
+			<p class="Muser-opration">	
+				<a href="javascript:void(0)" class="btn btn-primary" @click="daohang.enterIss(0)">发布讲座</a>
+				<a href="javascript:void(0)" class="btn btn-warning" @click="daohang.enterIss(1)">发布活动</a>
+			</p>
+		</div>
+		<px-tab-module :tab="ouser_lists"></px-tab-module>
+		<muser-filter-item :items="om_filter_item" v-if="ouser_lists.tipIndex==0"></muser-filter-item>
+		<!-- <div class="box-mid filter-box-mid">
+			<ul class="Muser-filter-ul" v-if="ouser_lists.tipIndex==0">
+				<li style="margin-right: 0">筛选：</li>
+				<li class="dropdown">
+					<a href="#" data-toggle="dropdown" class="dropdown-toggle">类型<span class="glyphicon glyphicon-chevron-down"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="###">活动</a></li>
+						<li><a href="###">讲座</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" data-toggle="dropdown" class="dropdown-toggle">角色<span class="glyphicon glyphicon-chevron-down"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="###">我参与的</a></li>
+						<li><a href="###">我发布的</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" data-toggle="dropdown" class="dropdown-toggle">时间<span class="glyphicon glyphicon-chevron-down"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="###">进行中</a></li>
+						<li><a href="###">已结束</a></li>
+					</ul>
+				</li>
+				<li style="clear:both;"></li>
+			</ul>
+		</div> -->
+		<div class="event-box">
+			<div class="box-mid">
+				
+				<div class="event-tip-lists" v-show="ouser_lists.tipIndex==0">
+					<div class="event-tip-box" v-for="item in user_event_list.data" v-on:click="eManage(item)">
+						<div class="event-tip-box-header">
+							<div class="ebox-tag">
+								<label v-if="item.acttype==0" class="c1">活动</label>
+								<label v-if="item.acttype==1" class="c2">讲座</label>
+							</div>
+							<a href="javascript:void(0)"><img :src="item.placard"></a>
+						</div>
+						<div class="event-tip-box-body">
+							<a href="">{{ item.name }}</a>
+							<p class="event-tip-tag">开始时间：{{ item.starttime|timeFilter }}</p>
+						</div>
+						<div class="event-tip-box-footer">
+							<div class="event-publisher">
+								<a href="javascript:void(0)">
+									<img src="img/5.jpg">
+									{{ item.host }}
+								</a>
+							</div>
+							<span class="time">{{item.starttime | releaseTime}}</span>
+						</div>
+					</div>
+					<!-- <div id="paging" style="text-align: center;margin-top: 440px" :pagenumber="" :totalpage="user_event_list.total"></div>
+					</div> -->
+					<div class="a_null" v-if="user_event_list.data.length==0">
+						啊哈?没有找到相关的活动/讲座
+						<a class="btn btn-link" href="px_search.html">发现更多</a>
+					</div>
+				</div>
+				<div class="event-tip-lists" v-show="ouser_lists.tipIndex==1">
+					<form class="form-horizontal user-setting">
+						<div class="form-group peo_tx">
+							<label class="control-label col-xs-2">个人头像</label>
+							<div class="col-xs-3">
+								<img :src="daohang.px_userinfo.icon" id="al_user_tx">
+							</div>
+							<div class="col-xs-4">
+								<p>上传的头像会自动生成头像缩略图，
+								支持JPG、GIF、PNG等图片格式 推荐尺寸：180*180像素,图片大小不得大于2MB </p>
+								<p class="input-group">
+									<a class="btn btn-lg btn-warning up_a">
+										<input type="file" id="upload_user_tx" onchange="uploadImg_change('upload_user_tx','al_user_tx')">
+										上传头像
+									</a>
+									<a class="btn btn-lg btn-primary" v-on:click="bcIcon">保存</a>
+								</p>
+							</div>
+						</div>
+						<spasswd-input v-for="item in group1" :inp_item="item"></spasswd-input>
+						<div class="form-group">
+								<label class="control-label col-xs-2">验证码<em>*</em>
+								</label>
+								<div class="col-xs-3">
+									<input type="text" v-model="alterpasswd.v" placeholder="验证码" >
+								</div>
+								<div class="col-xs-3">
+									<img :src="daohang.val_yzm" title="点击切换验证码" v-on:click="daohang.ref_yzm" style="height: 56px;">
+								</div>
+							</div>
+						<div class="form-group">
+							<div class="col-xs-6 col-xs-offset-4">
+								<p class="input-group">
+									<button type="button" class="btn btn-info" style="margin-right: 60px;" @click="changePwd">确定修改</button>
+									<button type="button" @click="clearPwd" class="btn btn-default">重置</button>
+								</p>
+							</div>						
+						</div>
+					</form>
+				</div>
+				<div class="event-tip-lists" v-show="ouser_lists.tipIndex==2">
+					<div v-if="!isShiming" class="peo_info">
+						<h3 class="vaildate-tit">深职院在线验证(快速认证)</h3>					
+						<form class="form form-horizontal user-setting">
+							<!-- <div class="form-group">
+								<label class="control-label col-xs-3">学号：</label>
+								<div class="col-xs-9">
+									
+								</div>
+							</div> -->
+							<stext-input v-for="item in group2" :inp_item="item"></stext-input>
+							<div class="form-group">
+								<label class="control-label col-xs-2">验证码<em>*</em>
+								</label>
+								<div class="col-xs-3">
+									<input type="text" v-model="vaildateType1.v" placeholder="验证码" >
+								</div>
+								<div class="col-xs-3">
+									<img :src="daohang.val_yzm" title="点击切换验证码" v-on:click="daohang.ref_yzm" style="height: 56px;">
+								</div>
+							</div>
+							<div class="btn-au-list">
+								<button type="button" class="btn btn-primary btn-lg" @click="submitVaildate(0)">提交</button>
+								<button type="button" class="btn btn-default btn-lg" @click="resetVaildate(0)">重置</button>
+							</div>
+						</form>
+						<hr>
+						<h3 class="vaildate-tit">学生证验证(人工审核)</h3>					
+						<form class="form form-horizontal user-setting">
+							<!-- <div class="form-group">
+								<label class="control-label col-xs-3">学号：</label>
+								<div class="col-xs-9">
+									
+								</div>
+							</div> -->
+							<div class="form-group peo_tx">
+								<label class="control-label col-xs-2">上传学生证<em>*</em></label>
+								<div class="col-xs-5">
+									<img src="" id="al_user_xsz">
+								</div>
+								<div class="col-xs-4">
+									<p>请保证上传的学生证图片高清无遮挡物，这将提高审核通过的几率。
+									支持JPG、GIF、PNG等图片格式,图片大小不得大于2MB </p>
+									<p class="input-group">
+										<a class="btn btn-lg btn-warning up_a">
+											<input type="file" id="upload_user_xsz" onchange="uploadImg_change('upload_user_xsz','al_user_xsz')">
+											上传头像
+										</a>
+									</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-xs-2">验证码<em>*</em>
+								</label>
+								<div class="col-xs-3">
+									<input type="text" placeholder="验证码" v-model="vaildateType2.v">
+								</div>
+								<div class="col-xs-3">
+									<img :src="daohang.val_yzm" title="点击切换验证码" v-on:click="daohang.ref_yzm" style="height: 56px;">
+								</div>
+							</div>
+						</form>
+						<div class="btn-au-list">
+							<button type="button" class="btn btn-primary btn-lg" @click="submitVaildate(1)">提交</button>
+							<button type="button" class="btn btn-default btn-lg" @click="resetVaildate(1)">重置</button>
+						</div>
+					</div>
+					<div class="shimingyes" v-else-if="isShiming">
+						<span class="glyphicon glyphicon-ok-sign"></span>
+						<p>恭喜你,实名认证成功！</p>
+					</div>
+				</div>
+				<div style="clear: both"></div>
+			</div>
+		<px-footer></px-footer>
+	</div>
+		<script type="text/javascript" src="js/global_setting.js"></script>
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/browseType.js"></script>
+	<script type="text/javascript" src="js/vue.min.js"></script>
+	<script src="https://cdn.bootcss.com/axios/0.16.2/axios.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.min.js"></script>
+	<script type="text/javascript" src="js/global.js"></script>
+	<script type="text/javascript" src="js/userManager.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>首页</title>
+	<link rel="stylesheet" type="text/css" href="css/xypuxing.min.css">
+	<link rel="stylesheet" href="css/global.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.min.css">
+
+</head>
+<body>	
+	<div id="px_homePage">
+
+		<px-home-nav></px-home-nav>
+
+		<div id="px_banner" class="carousel slide" data-interval="2000" data-ride="carousel" v-on:mouseover="isShow_banner_a=true" v-on:mouseout="isShow_banner_a=false">
+			<ol class="carousel-indicators">
+				<li data-target="#px_banner" class="active" data-slide-to="0"></li>
+				<li data-target="#px_banner" data-slide-to="1"></li>
+			</ol>
+			<div class="carousel-inner">
+				<div class="item active">				
+					<img src="img/8.jpg">
+				</div>
+				<div class="item">
+					<img src="img/8.jpg">
+				</div>
+			</div>
+			<a href="#px_banner" class="banner-control-left" data-slide="prev" v-show="isShow_banner_a"><span class="glyphicon glyphicon-chevron-left"></span></a>
+			<a href="#px_banner" class="banner-control-right" data-slide="next" v-show="isShow_banner_a"><span class="glyphicon glyphicon-chevron-right"></span></a>
+		</div>
+		<px-tab-module :tab="tip_lists"></px-tab-module>
+		<div class="event-box">
+			<div class="box-mid">
+				<div class="event-tip-lists" v-show="tip_lists.tipIndex==0">
+					<event-box v-for="item in rec_act" :item="item" v-on:locations="locatoinDetail(item)"></event-box>	
+				</div>
+			</div>
+		</div>
+		<px-footer></px-footer>
+	<script type="text/javascript" src="js/global_setting.js"></script>
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/browseType.js"></script>
+	<script type="text/javascript" src="js/vue.min.js"></script>
+	<script src="https://cdn.bootcss.com/axios/0.16.2/axios.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.min.js"></script>
+	<script type="text/javascript" src="js/global.js"></script>
+	<script type="text/javascript" src="js/izx.js"></script>	
+</body>
+</html>
