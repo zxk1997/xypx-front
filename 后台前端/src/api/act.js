@@ -35,8 +35,10 @@ export default{
     },
     pushAct(id,type,scb,ecb){
         req.handler(
-            vue.$http.post('/act/rec/'+id,{
-                "type":type
+            vue.$http({
+                url:'/act/rec/'+id,
+                method:"POST",
+                params:{"type":type}
             }),
             scb,ecb,ecb
         ); 

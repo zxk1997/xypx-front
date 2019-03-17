@@ -32,6 +32,19 @@ export default{
                 if(reqfailCall!=null){
                     reqfailCall(response);
                 }
+
+                if(response.data.errorCode==-1){
+                    //未登录
+                    console.log("没登录啊")
+                    vue.$alert('登录状态丢失，将返回登录页面', '提示', {
+                        confirmButtonText: '确定',
+                        type:'error',
+                        callback: action => {
+                            location=location;
+                        }
+                      });
+                    
+                }
                  
             }
             

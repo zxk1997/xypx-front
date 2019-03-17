@@ -13,8 +13,8 @@
   >
 </el-input>
 <el-input placeholder="请输入密码" v-model="p" show-password class="inputStyle"></el-input><br />
-<el-button type="primary" @click="login">登录</el-button><br />
-<div>登录账户：admin<br />密码：123</div>
+<el-button type="primary" @click="login" class="inputStyle">登录</el-button><br />
+
 <el-tag class="inputStyle">后台前端实现：Vue+element-ui+Vue CLI</el-tag>
 </el-card>
 </div>
@@ -22,16 +22,19 @@
 
 <script>
 import _tools from '../api/common.js'
+import _user from '../api/manage.js'
 export default {
     data(){
         return {
-            u:'admin',
-            p:'123',
+            u:'',
+            p:'',
         }
     },methods:{
         login(){
-            //_tools.showMsgBox("哈哈哈",1);
-            this.$emit('go');
+            _user.login(this.u,this.p,((data)=>{
+                this.$emit('go',data.info);
+            }))
+            
         },
     }
 }
@@ -41,7 +44,7 @@ export default {
     width: 50%;
     height: 50%;
     position: absolute;
-    top: 25%;
+    top: 15%;
     left: 25%;
     text-align: center;
     padding: 10px;
@@ -53,7 +56,7 @@ export default {
     margin-bottom: 10px;
 }
 .cardStyle{
-    width: 800px;
+    width: 600px;
     margin: 0 auto;
 }
 </style>

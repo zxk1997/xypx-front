@@ -1,5 +1,5 @@
 <template>
-    <component :is="cn" v-on:go='handle'></component>
+    <component :is="cn" v-on:go='handle' :info='info' ></component>
 </template>
 
 <script>
@@ -9,10 +9,24 @@ export default {
     data(){
         return{
             cn:login,
+            info:{},
         }
-    },methods:{
-        handle(){
+    },
+    mounted:function(){
+      this.getLoginState();
+    }
+    ,methods:{
+        handle(info){
+            console.log(info);
             this.cn=_main;
+            this.info=info;
+        },
+        getLoginState(){
+            this.$http.get('/manage/login/state').then((resp)=>{
+                if(resp.data.status==1){
+                    this.cn=_main;
+                }
+            });
         }
     }
 }

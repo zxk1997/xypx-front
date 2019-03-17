@@ -4,6 +4,20 @@
         <el-header height="100">
             <img src="http://120.78.83.14:8090/img/logo.png" style="height:64px ; position: relative;top: 20px;">
             <span style="font-size:40px; color: #409EFF;">校园蒲行后台管理</span>
+
+            <el-dropdown class="info-nav" @command="logout"> 
+                <span class="el-dropdown-link">
+                    {{info.user}}
+                    <span v-if="info.role=='admin'">(所有权限)</span>
+                    <span v-if="info.role=='normal'">(只读权限)</span>
+                    <i class="el-icon-arrow-down el-icon--right"></i><br/>
+                </span>
+                
+                <el-dropdown-menu slot="dropdown"  >
+                    <el-dropdown-item >退出登录</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+
         </el-header> 
         
         <el-container><!--子元素包含el-aside，所以这是水平布局-->
@@ -44,7 +58,9 @@ import tag_per from './manage-tag-per.vue'
 import act_push from './manage-act-push.vue'
 import act from './manage-act.vue'
 import act_review from './manage-act-review.vue'
+import _user from '../api/manage.js'
 export default {
+    props:['info'],
     data() {
         return {
             //放一些变量
@@ -93,6 +109,8 @@ export default {
                 ]
                     
         }
+    },mounted:function(){
+      console.log(this.info)
     },
     methods:{
         //响应一些方法
@@ -113,6 +131,10 @@ export default {
             }else  if(key=="活动审核"){
                 this.main_content=act_review;
             }
+      },logout(){
+          _user.logout((data)=>{
+              location=location;
+          });
       }    
     },
     components:{
@@ -124,7 +146,12 @@ export default {
 
 
 <style scoped>
-
+  .info-nav{
+      position: fixed;
+    right: 5%;
+    color: #409EFF;
+    font-size: 20px;
+  }
   .el-header {
     background-color:rgb(255, 255, 255);
     color: #333;

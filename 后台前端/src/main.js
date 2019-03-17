@@ -22,7 +22,9 @@ const router =new VueRouter({
 });*/
 
 Vue.http.interceptors.push((request) => {
-  request.url="http://localhost:8070"+request.url;
+  request.url="http://127.0.0.1:8070"+request.url;
+  //request.headers.map[Access-Control-Allow-Credentials]=true;
+  request.credentials = true;
 });
 
 new Vue({
